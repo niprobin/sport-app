@@ -1,0 +1,141 @@
+[
+    {
+        "Jour": "Lundi",
+        "Activité": "Tennis",
+        "Séries": {
+            "Nombre de séries": "1",
+            "Repos entre série": "Pas de repos",
+            "Exercices": [
+                { 
+                    "Nom": "Entrainement 1h30",
+                    "Répétitions": "1" ,
+                    "Repos": "Pas de repos"
+                }
+            ]
+        }
+    },
+    {
+        "Jour": "Mardi",
+        "Activité": "Musculation Explosivité",
+        "Séries": {
+            "Nombre de séries": "3",
+            "Repos entre série": "60 secondes",
+            "Exercices": [
+                { 
+                    "Nom": "Squats",
+                    "Répétitions": "12" ,
+                    "Repos": "45 secondes"
+                },
+                 { 
+                    "Nom": "Fentes",
+                    "Répétitions": "16",
+                    "Repos": "45 secondes"
+                },
+                { 
+                    "Nom": "Hip Thrust",
+                    "Répétitions": "12",
+                    "Repos": "45 secondes",
+                    "Explication": "https://workoutlabs.com/wp-content/uploads/watermarked/Barbell_Hip_Thrusts.png"
+                },
+                { 
+                    "Nom": "Mollets Debout",
+                    "Répétitions": "20",
+                    "Repos": "45 secondes"
+                }
+            ]
+        }
+    },
+    {
+        "Jour": "Mercredi",
+        "Activité": "Tennis",
+        "Séries": {
+            "Nombre de séries": "1",
+            "Repos entre série": "Pas de repos",
+            "Exercices": [
+                { 
+                    "Nom": "Entrainement 1h30",
+                    "Répétitions": "1" ,
+                    "Repos": "Pas de repos"
+                }
+            ]
+        }
+    },
+    {
+        "Jour": "Jeudi",
+        "Activité": "Entrainement Cardio",
+        "Séries": {
+            "Nombre de séries": "1",
+            "Repos entre série": "Pas de repos",
+            "Exercices": [
+                { 
+                    "Nom": "30 secondes Z4",
+                    "Répétitions": "10" ,
+                    "Repos": "30 secondes"
+                },
+                 { 
+                    "Nom": "2 minutes Z1",
+                    "Répétitions": "1",
+                    "Repos": "Pas de repos"
+                },
+                { 
+                    "Nom": "10 secondes Z5",
+                    "Répétitions": "3",
+                    "Repos": "5 secondes"
+                },
+                { 
+                    "Nom": "15 minutes Z1",
+                    "Répétitions": "1",
+                    "Repos": "Pas de repos"
+                }
+            ]
+        }
+    },
+    {
+        "Jour": "Vendredi",
+        "Activité": "Musculation Prévention",
+        "Séries": {
+            "Nombre de séries": "3",
+            "Repos entre série": "60 secondes",
+            "Exercices": [
+                { 
+                    "Nom": "Glute Ham Raise",
+                    "Répétitions": "6" ,
+                    "Repos": "45 secondes",
+                    "Explication": "https://www.hevyapp.com/wp-content/uploads/31931101-Glute-Ham-Raise_Thighs_small.jpg"
+
+                },
+                 { 
+                    "Nom": "Copenhagen Plank 15s",
+                    "Répétitions": "2 par côté",
+                    "Repos": "45 secondes",
+                    "Explication": "https://images.ctfassets.net/1q5z3k4ftwpz/4ewBRjTw2KGMhZzP88XliF/8cf0685904527b949562636a3632fde0/https-welltechdev-wpengine-com-wp-content-uploads-2022-09-copenhagen-plank-on-the-forearm-min-jpg"
+                },
+                { 
+                    "Nom": "Gainage 45s Complet Droit/Gauche/Droite/Dos",
+                    "Répétitions": "1 par côté",
+                    "Repos": "45 secondes"
+                }
+            ]
+        }
+    },
+    {
+        "Jour": "LSamedi",
+        "Activité": "Match ou Course",
+        "Séries": {
+            "Nombre de séries": "1",
+            "Repos entre série": "Pas de repos",
+            "Exercices": [
+                { 
+                    "Nom": "Match 1h30",
+                    "Répétitions": "1" ,
+                    "Repos": "Pas de repos"
+                },
+                { 
+                    "Nom": "Course 1h Z2/Z3",
+                    "Répétitions": "1" ,
+                    "Repos": "Pas de repos"
+                }
+            ]
+        }
+    }
+]

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>App Renfo Muscles</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap');
+    :root {
+      --bg: #050505;
+      --fg: #f8f8f8;
+      --muted: #a3a3a3;
+      --card: #0f0f0f;
+      --border: #1c1c1c;
+      --accent: #ffffff;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--fg);
+      background: radial-gradient(80% 80% at 50% 20%, rgba(255,255,255,0.08), transparent), var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 12px;
+      letter-spacing: 0.01em;
+    }
+    main {
+      width: min(440px, 100%);
+      height: calc(100vh - 24px);
+      max-height: 720px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .panel {
+      width: 100%;
+      height: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(35% 45% at 100% 0%, rgba(255,255,255,0.07), transparent);
+      z-index: -1;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .subtle {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .day-nav {
+      display: grid;
+      grid-template-columns: repeat(var(--day-count, 6), 1fr);
+      width: 100%;
+      gap: 6px;
+    }
+    .chip {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      padding: 10px 0;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .chip:hover { border-color: rgba(255,255,255,0.14); color: var(--fg); }
+    .chip.active {
+      background: var(--fg);
+      color: #090909;
+      border-color: transparent;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+    }
+    .hero {
+      background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .eyebrow {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .day-name { font-size: 22px; font-weight: 600; }
+    .activity {
+      font-size: 20px;
+      color: #e0e0e0;
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .pill.light {
+      background: var(--fg);
+      color: #111;
+      border-color: transparent;
+    }
+    .exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      overflow: hidden;
+      justify-content: flex-start;
+    }
+    .exercise {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: grid;
+      gap: 6px;
+    }
+    .exercise-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .exercise-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .rest {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--fg);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+      width: max-content;
+    }
+    .link:hover { color: #fff; border-bottom-color: #fff; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+    .modal.open { display: flex; }
+    .modal-card {
+      background: #0b0b0b;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      max-width: min(520px, 92vw);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+    .modal img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      object-fit: contain;
+      background: #050505;
+      max-height: 70vh;
+    }
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .close-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .close-btn:hover { background: rgba(255,255,255,0.12); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+    @media (max-height: 640px) {
+      .panel { gap: 10px; padding: 12px; }
+      .exercise { padding: 8px 10px; }
+      .day-name { font-size: 20px; }
+      .activity { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <header>
+        <div class="brand">
+          <div>
+            <h1>Ma routine</h1>
+          </div>
+        </div>
+        <div class="pill light" id="sessionIndex">Jour 1 / 7</div>
+      </header>
+
+      <div class="day-nav" id="dayNav" aria-label="Choisir un jour"></div>
+
+      <div class="hero">
+        <div class="eyebrow">Focus de la séance</div>
+        <h2 class="activity" data-activity>Musculation Explosivité</h2>
+        <div class="meta">
+          <span class="pill">Series: <span data-sets>3</span></span>
+          <span class="pill">Repos serie: <span data-rest>60 s</span></span>
+        </div>
+      </div>
+
+      <div class="exercises" id="exerciseList"></div>
+
+      <footer>
+        <span>Robin CAILLAT</span>
+      </footer>
+    </section>
+  </main>
+
+  <div class="modal" id="guideModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div>
+          <div class="eyebrow">Guiding picture</div>
+          <div class="exercise-title" id="guideTitle">Exercice</div>
+        </div>
+        <button class="close-btn" id="closeModal">Fermer</button>
+      </div>
+      <img id="guideImg" src="" alt="Guide visuel">
+    </div>
+  </div>
+
+  <script>
+    const sanitize = (text = '') => text
+      .toString()
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\u01F8|\uFFFD/g, 'e')
+      .replace(/^LSamedi/i, 'Samedi');
+
+    let schedule = [];
+    let current = 0;
+
+    const resolveTodayIndex = () => {
+      const today = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', timeZone: 'Europe/Paris' }).format(new Date());
+      const target = today.charAt(0).toUpperCase() + today.slice(1);
+      const found = schedule.findIndex((entry) => entry.day && entry.day.toLowerCase() === target.toLowerCase());
+      return found >= 0 ? found : 0;
+    };
+
+    const dayNav = document.getElementById('dayNav');
+    const exerciseList = document.getElementById('exerciseList');
+    const sessionIndex = document.getElementById('sessionIndex');
+    const activitySlot = document.querySelector('[data-activity]');
+    const setsSlot = document.querySelector('[data-sets]');
+    const restSlot = document.querySelector('[data-rest]');
+    const modal = document.getElementById('guideModal');
+    const modalImg = document.getElementById('guideImg');
+    const modalTitle = document.getElementById('guideTitle');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    const cleanKey = (key = '') => sanitize(key).toLowerCase().replace(/[^a-z]/g, '');
+
+    const normalize = (raw = []) => raw.map((entry) => {
+      const normalizedEntry = {};
+      Object.entries(entry || {}).forEach(([k, v]) => { normalizedEntry[cleanKey(k)] = v; });
+
+      const seriesRaw = normalizedEntry.series || normalizedEntry.sseries || normalizedEntry.sries || {};
+      const series = {};
+      Object.entries(seriesRaw || {}).forEach(([k, v]) => { series[cleanKey(k)] = v; });
+
+      const exercises = Array.isArray(series.exercices) ? series.exercices : (series.exercises || []);
+
+      return {
+        day: sanitize(normalizedEntry.jour || normalizedEntry.day),
+        activity: sanitize(normalizedEntry.activite || normalizedEntry.activiten || normalizedEntry.activity),
+        sets: sanitize(series.nombredeseries || series.nombredesries || series.sets || ''),
+        between: sanitize(series.reposentreserie || series.reposentresrie || series.rest || ''),
+        exercises: exercises.map((ex) => {
+          const exNorm = {};
+          Object.entries(ex || {}).forEach(([k, v]) => { exNorm[cleanKey(k)] = v; });
+          return {
+            name: sanitize(exNorm.nom || exNorm.name),
+            reps: sanitize(exNorm.repetitions || exNorm.repetitions || ''),
+            rest: sanitize(exNorm.repos || exNorm.rest || ''),
+            note: sanitize(exNorm.explication || exNorm.note || '')
+          };
+        })
+      };
+    });
+
+    const loadSchedule = async () => {
+      try {
+        const res = await fetch('renfo-foot.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        schedule = normalize(data);
+        current = resolveTodayIndex();
+        render();
+      } catch (err) {
+        exerciseList.innerHTML = '<div class="exercise">Impossible de charger le plan. Vérifie renfo-foot.json.</div>';
+        console.error('Loading failed', err);
+      }
+    };
+
+    const buildNav = () => {
+      dayNav.innerHTML = '';
+      const total = schedule.length || 1;
+      dayNav.style.setProperty('--day-count', total);
+      schedule.forEach((day, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'chip' + (index === current ? ' active' : '');
+        button.textContent = day.day || `J${index + 1}`;
+        button.addEventListener('click', () => {
+          current = index;
+          render();
+        });
+        dayNav.appendChild(button);
+      });
+    };
+
+    const renderExercises = (items = []) => {
+      exerciseList.innerHTML = '';
+      if (!items.length) {
+        exerciseList.innerHTML = '<div class="exercise">Aucun exercice pour ce jour.</div>';
+        return;
+      }
+      items.forEach((item) => {
+        const card = document.createElement('article');
+        card.className = 'exercise';
+        const guideLink = item.note ? `<button class="link" data-guide="${item.note}" data-name="${item.name}">Guide</button>` : '';
+        card.innerHTML = `
+          <div class="exercise-head">
+            <span class="exercise-title">${item.name}</span>
+          </div>
+          <div class="rest">Répétitions: ${item.reps || '-'}</div>
+          <div class="rest">Repos: ${item.rest || '-'}</div>
+          ${guideLink}
+        `;
+        exerciseList.appendChild(card);
+      });
+      exerciseList.querySelectorAll('[data-guide]').forEach((btn) => {
+        btn.addEventListener('click', () => openGuide(btn.dataset.guide, btn.dataset.name));
+      });
+    };
+
+    const openGuide = (url, name) => {
+      modalImg.src = url;
+      modalImg.alt = name || 'Guide visuel';
+      modalTitle.textContent = name || 'Exercice';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    };
+
+    const closeGuide = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImg.src = '';
+    };
+
+    closeModalBtn.addEventListener('click', closeGuide);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeGuide();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeGuide();
+    });
+
+    const render = () => {
+      if (!schedule.length) return;
+      const selected = schedule[current];
+      activitySlot.textContent = selected.activity || 'Activité';
+      setsSlot.textContent = selected.sets || '-';
+      restSlot.textContent = selected.between || '-';
+      sessionIndex.textContent = `Jour ${current + 1} / ${schedule.length}`;
+      renderExercises(selected.exercises);
+      buildNav();
+    };
+
+    loadSchedule();
+  </script>
+</body>
+</html>
