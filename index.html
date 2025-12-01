@@ -20,45 +20,19 @@
       margin: 0;
       font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--fg);
-      background: radial-gradient(80% 80% at 50% 20%, rgba(255,255,255,0.08), transparent), var(--bg);
+      background: #020202;
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 12px;
       letter-spacing: 0.01em;
     }
-    main {
-      width: min(440px, 100%);
-      height: calc(100vh - 24px);
-      max-height: 720px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .panel {
-      width: 100%;
-      height: 100%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 16px;
+    .app {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .panel::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(35% 45% at 100% 0%, rgba(255,255,255,0.07), transparent);
-      z-index: -1;
+      width: 100%;
+      min-height: 100vh;
+      padding: clamp(16px, 4vw, 34px);
+      gap: 20px;
     }
     header {
       display: flex;
@@ -91,44 +65,45 @@
       font-size: 12px;
     }
     .day-nav {
-      display: grid;
-      grid-template-columns: repeat(var(--day-count, 6), 1fr);
-      width: 100%;
-      gap: 6px;
+      display: flex;
+      gap: 12px;
+      width: calc(100% + clamp(16px, 4vw, 34px) * 2);
+      margin-left: calc(-1 * clamp(16px, 4vw, 34px));
+      padding-left: clamp(16px, 4vw, 34px);
+      padding-right: clamp(16px, 4vw, 34px);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      overflow-x: auto;
     }
     .chip {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
+      flex: 1;
+      border: none;
+      background: none;
       color: var(--muted);
       padding: 10px 0;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 12px;
+      font-weight: 500;
+      font-size: 13px;
       text-align: center;
-      transition: all 0.2s ease;
+      transition: color 0.2s ease, border-bottom 0.2s ease;
       cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
     }
-    .chip:hover { border-color: rgba(255,255,255,0.14); color: var(--fg); }
+    
     .chip.active {
-      background: var(--fg);
-      color: #090909;
-      border-color: transparent;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+      color: var(--fg);
+      border-color: var(--fg);
     }
     .hero {
-      background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
+      padding-bottom: 12px;
       display: grid;
-      gap: 8px;
+      gap: 6px;
     }
     .eyebrow {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.24em;
     }
     .day-name { font-size: 22px; font-weight: 600; }
     .activity {
@@ -148,7 +123,7 @@
       border: 1px solid var(--border);
       color: var(--fg);
       padding: 6px 10px;
-      border-radius: 12px;
+      border-radius: 2px;
       font-size: 12px;
       display: inline-flex;
       align-items: center;
@@ -159,20 +134,22 @@
       background: var(--fg);
       color: #111;
       border-color: transparent;
+      border-radius: 2px;
     }
     .exercises {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       flex: 1;
-      overflow: hidden;
-      justify-content: flex-start;
+      overflow-y: auto;
+      padding-right: 6px;
     }
     .exercise {
       border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
       background: rgba(255,255,255,0.02);
-      border-radius: 14px;
-      padding: 10px 12px;
+      border-radius: 2px;
+      padding: 12px;
       display: grid;
       gap: 6px;
     }
@@ -181,6 +158,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+    }
+    .exercise-separator {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.4em;
+      padding: 4px 0;
     }
     .exercise-title {
       font-weight: 600;
@@ -255,53 +239,42 @@
     .close-btn:hover { background: rgba(255,255,255,0.12); }
     footer {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
+      justify-content: flex-end;
       font-size: 12px;
       color: var(--muted);
-      border-top: 1px solid var(--border);
       padding-top: 8px;
     }
     @media (max-height: 640px) {
-      .panel { gap: 10px; padding: 12px; }
-      .exercise { padding: 8px 10px; }
-      .day-name { font-size: 20px; }
-      .activity { font-size: 14px; }
+      .app { gap: 14px; padding: 12px; }
+      .exercise { padding: 10px; }
+      .activity { font-size: 16px; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <section class="panel">
-      <header>
-        <div class="brand">
-          <div>
-            <h1>Ma routine</h1>
-          </div>
-        </div>
-        <div class="pill light" id="sessionIndex">Jour 1 / 7</div>
-      </header>
-
-      <div class="day-nav" id="dayNav" aria-label="Choisir un jour"></div>
-
-      <div class="hero">
-        <div class="eyebrow">Focus de la séance</div>
-        <h2 class="activity" data-activity>Musculation Explosivité</h2>
-        <div class="meta">
-          <span class="pill">Series: <span data-sets>3</span></span>
-          <span class="pill">Repos serie: <span data-rest>60 s</span></span>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div>
+          <h1>Ma routine</h1>
         </div>
       </div>
+    </header>
 
-      <div class="exercises" id="exerciseList"></div>
+    <div class="day-nav" id="dayNav" aria-label="Choisir un jour"></div>
 
-      <footer>
-        <span>Robin CAILLAT</span>
-      </footer>
-    </section>
-  </main>
+    <div class="hero">
+      <div class="eyebrow">Focus de la séance</div>
+      <h2 class="activity" data-activity>Musculation Explosivité</h2>
+      <div class="meta">
+        <span class="pill">Séries: <span data-sets>3</span></span>
+        <span class="pill">Repos série: <span data-rest>60 s</span></span>
+      </div>
+    </div>
 
+    <div class="exercises" id="exerciseList"></div>
+
+  </div>
   <div class="modal" id="guideModal" aria-hidden="true">
     <div class="modal-card">
       <div class="modal-top">
@@ -316,12 +289,24 @@
   </div>
 
   <script>
-    const sanitize = (text = '') => text
-      .toString()
-      .normalize('NFKD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\u01F8|\uFFFD/g, 'e')
-      .replace(/^LSamedi/i, 'Samedi');
+    const sanitize = (text = '') => {
+      const value = (text ?? '').toString().trim();
+      if (!value) return '';
+      if (/^LSamedi/i.test(value)) return 'Samedi';
+      if (/[ÃÂǸ�]/.test(value)) {
+        try {
+          const latinBytes = new Uint8Array(value.length);
+          for (let i = 0; i < value.length; i++) {
+            latinBytes[i] = value.charCodeAt(i) & 0xff;
+          }
+          const decoded = new TextDecoder('utf-8', { fatal: false }).decode(latinBytes);
+          return decoded;
+        } catch (err) {
+          return value;
+        }
+      }
+      return value;
+    };
 
     let schedule = [];
     let current = 0;
@@ -335,7 +320,6 @@
 
     const dayNav = document.getElementById('dayNav');
     const exerciseList = document.getElementById('exerciseList');
-    const sessionIndex = document.getElementById('sessionIndex');
     const activitySlot = document.querySelector('[data-activity]');
     const setsSlot = document.querySelector('[data-sets]');
     const restSlot = document.querySelector('[data-rest]');
@@ -344,13 +328,20 @@
     const modalTitle = document.getElementById('guideTitle');
     const closeModalBtn = document.getElementById('closeModal');
 
-    const cleanKey = (key = '') => sanitize(key).toLowerCase().replace(/[^a-z]/g, '');
+    const cleanKey = (key = '') => {
+      const base = sanitize(key);
+      return base
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z]/g, '');
+    };
 
     const normalize = (raw = []) => raw.map((entry) => {
       const normalizedEntry = {};
       Object.entries(entry || {}).forEach(([k, v]) => { normalizedEntry[cleanKey(k)] = v; });
 
-      const seriesRaw = normalizedEntry.series || normalizedEntry.sseries || normalizedEntry.sries || {};
+      const seriesRaw = normalizedEntry.series || normalizedEntry.sseries || normalizedEntry.sries || normalizedEntry.serries || {};
       const series = {};
       Object.entries(seriesRaw || {}).forEach(([k, v]) => { series[cleanKey(k)] = v; });
 
@@ -359,8 +350,8 @@
       return {
         day: sanitize(normalizedEntry.jour || normalizedEntry.day),
         activity: sanitize(normalizedEntry.activite || normalizedEntry.activiten || normalizedEntry.activity),
-        sets: sanitize(series.nombredeseries || series.nombredesries || series.sets || ''),
-        between: sanitize(series.reposentreserie || series.reposentresrie || series.rest || ''),
+        sets: sanitize(series.nombredeseries || series.nombredesries || series.numero || series.sets || series.nombre || ''),
+        between: sanitize(series.reposentreserie || series.reposentresrie || series.repos || series.rest || ''),
         exercises: exercises.map((ex) => {
           const exNorm = {};
           Object.entries(ex || {}).forEach(([k, v]) => { exNorm[cleanKey(k)] = v; });
@@ -405,13 +396,13 @@
       });
     };
 
-    const renderExercises = (items = []) => {
+    const renderExercises = (items = [], options = {}) => {
       exerciseList.innerHTML = '';
       if (!items.length) {
         exerciseList.innerHTML = '<div class="exercise">Aucun exercice pour ce jour.</div>';
         return;
       }
-      items.forEach((item) => {
+      items.forEach((item, index) => {
         const card = document.createElement('article');
         card.className = 'exercise';
         const guideLink = item.note ? `<button class="link" data-guide="${item.note}" data-name="${item.name}">Guide</button>` : '';
@@ -424,6 +415,12 @@
           ${guideLink}
         `;
         exerciseList.appendChild(card);
+        if (options.separatorLabel && index === 0 && items.length > 1) {
+          const separator = document.createElement('div');
+          separator.className = 'exercise-separator';
+          separator.textContent = options.separatorLabel;
+          exerciseList.appendChild(separator);
+        }
       });
       exerciseList.querySelectorAll('[data-guide]').forEach((btn) => {
         btn.addEventListener('click', () => openGuide(btn.dataset.guide, btn.dataset.name));
@@ -455,11 +452,11 @@
     const render = () => {
       if (!schedule.length) return;
       const selected = schedule[current];
-      activitySlot.textContent = selected.activity || 'Activité';
+      activitySlot.textContent = selected.activity || 'Activite';
       setsSlot.textContent = selected.sets || '-';
       restSlot.textContent = selected.between || '-';
-      sessionIndex.textContent = `Jour ${current + 1} / ${schedule.length}`;
-      renderExercises(selected.exercises);
+      const separatorLabel = selected.day && selected.day.toLowerCase().includes('samedi') ? 'OU' : '';
+      renderExercises(selected.exercises, { separatorLabel });
       buildNav();
     };
 
